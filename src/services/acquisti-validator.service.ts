@@ -19,8 +19,8 @@ export class AcquistiValidatorService {
   protected currentPlatform = 'ios';
 
   constructor(
-    private platform: Platform,
-    private store: InAppPurchase2,
+    public platform: Platform,
+    public store: InAppPurchase2,
     public wordpress: WordpressService,
   ) {
     if (this.platform.is('android')) {

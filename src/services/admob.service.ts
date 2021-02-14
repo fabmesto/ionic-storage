@@ -54,7 +54,7 @@ export class AdmobService {
   public premioUsatoEvent = new Subject();
 
   constructor(
-    private cache: CacheService,
+    public cache: CacheService,
     public acquistiService: AcquistiValidatorService,
   ) {
     this.nascondiADV = false;
