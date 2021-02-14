@@ -68,7 +68,7 @@ export class AuthenticationService {
 
   doRegister(user_data: any, token: string) {
     let options = this.https.getHeadersToken(token);
-    return this.https.post(this.url_wordpress_user_register + '?C=register&action=register', user_data, options);
+    return this.https.post(this.url_wordpress_user_register, user_data, options);
   }
 
   logOut() {

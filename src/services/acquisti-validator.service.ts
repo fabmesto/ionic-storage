@@ -15,6 +15,7 @@ export class AcquistiValidatorService {
   public acquistati: Array<acquistoModel> = [];
   public logs = [];
   public user_key = '';
+  public inapp_key = 'ff_inapp';
   protected currentPlatform = 'ios';
 
   constructor(
@@ -28,13 +29,13 @@ export class AcquistiValidatorService {
   }
 
   getLocal() {
-    const repString = localStorage.getItem('ff_inapp');
+    const repString = localStorage.getItem(this.inapp_key);
     if (repString) { return JSON.parse(repString); }
     return [];
   }
 
   setLocal(data) {
-    localStorage.setItem('ff_inapp', JSON.stringify(data));
+    localStorage.setItem(this.inapp_key, JSON.stringify(data));
   }
 
   addLog(message) {
