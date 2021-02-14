@@ -1,2 +1,2 @@
 # ionic-storage
-Ioni storage service
+Ionic storage service
