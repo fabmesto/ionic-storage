@@ -1,2 +1,2 @@
-# ionic-storage
-Ionic storage service
+# ionic-wp
+Ionic Wordpress services
