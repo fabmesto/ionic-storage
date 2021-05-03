@@ -11,7 +11,7 @@ import { Plugins } from '@capacitor/core';
   providedIn: 'root'
 })
 export class HttpsService {
-  protected usePlugin = false;
+  protected usePlugin = true;
   protected urltimeout = 25000;
 
   constructor(
@@ -22,6 +22,35 @@ export class HttpsService {
   }
 
   errorMsg = '';
+
+  public getHeadersNoCache(options: any = {}) {
+    if (this.usePlugin) {
+      return this.getHeadersNoCachePlugin(options);
+    } else {
+      return this.getHeadersNoCacheAngular(options);
+    }
+  }
+
+  getHeadersNoCacheAngular(options: any = {}) {
+    if (!('headers' in options)) {
+      options.headers = {};
+    }
+    options.headers['Cache-control'] = 'no-cache';
+    options.headers['Expires'] = '0';
+    options.headers['Pragma'] = 'no-cache';
+
+    return options;
+  }
+
+  getHeadersNoCachePlugin(headers: any = {}) {
+    if (!('headers' in headers)) {
+      headers.headers = {};
+    }
+    headers.headers['Cache-control'] = 'no-cache';
+    headers.headers['Expires'] = '0';
+    headers.headers['Pragma'] = 'no-cache';
+    return headers;
+  }
 
   public getHeadersToken(token: string = '') {
     if (this.usePlugin) {
@@ -50,9 +79,11 @@ export class HttpsService {
   }
 
   public get(url, headers = {}, params = {}) {
+    headers = this.getHeadersNoCache(headers);
     if (this.usePlugin) {
       return this.getPlugin(url, headers, params);
     } else {
+
       return this.getAngular(url, headers);
     }
   }
