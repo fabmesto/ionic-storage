@@ -80,6 +80,7 @@ export class HttpsService {
 
   public get(url, headers = {}, params = {}) {
     headers = this.getHeadersNoCache(headers);
+    console.log('get headers', headers);
     if (this.usePlugin) {
       return this.getPlugin(url, headers, params);
     } else {
