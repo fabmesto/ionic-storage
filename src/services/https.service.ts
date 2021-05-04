@@ -12,6 +12,7 @@ import { Plugins } from '@capacitor/core';
 })
 export class HttpsService {
   protected usePlugin = true;
+  protected useNoCache = true;
   protected urltimeout = 25000;
 
   constructor(
@@ -35,20 +36,17 @@ export class HttpsService {
     if (!('headers' in options)) {
       options.headers = {};
     }
+
     options.headers['Cache-control'] = 'no-cache';
     options.headers['Expires'] = '0';
-    options.headers['Pragma'] = 'no-cache';
+    // options.headers['Pragma'] = 'no-cache';
 
     return options;
   }
 
   getHeadersNoCachePlugin(headers: any = {}) {
-    if (!('headers' in headers)) {
-      headers.headers = {};
-    }
-    headers.headers['Cache-control'] = 'no-cache';
-    headers.headers['Expires'] = '0';
-    headers.headers['Pragma'] = 'no-cache';
+    headers['Cache-control'] = 'no-cache';
+    headers['Expires'] = '0';
     return headers;
   }
 
@@ -79,8 +77,9 @@ export class HttpsService {
   }
 
   public get(url, headers = {}, params = {}) {
-    headers = this.getHeadersNoCache(headers);
-    console.log('get headers', headers);
+    if (this.useNoCache) {
+      headers = this.getHeadersNoCache(headers);
+    }
     if (this.usePlugin) {
       return this.getPlugin(url, headers, params);
     } else {
