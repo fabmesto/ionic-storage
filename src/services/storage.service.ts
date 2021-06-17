@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +7,11 @@ import { Plugins } from '@capacitor/core';
 export class StorageService {
 
   constructor(
-
-  ) { }
+  ) {
+    Storage.migrate();
+  }
 
   async set(key: string, value: any): Promise<void> {
-    const { Storage } = Plugins;
     if (typeof value != 'string') {
       value = JSON.stringify(value);
     }
@@ -22,20 +22,17 @@ export class StorageService {
   }
 
   async get(key: string): Promise<string> {
-    const { Storage } = Plugins;
     const item = await Storage.get({ key: key });
     return item.value;
   }
 
   async remove(key: string): Promise<void> {
-    const { Storage } = Plugins;
     await Storage.remove({
       key: key
     });
   }
 
   async removes(startkey: string): Promise<void> {
-    const { Storage } = Plugins;
     let keys = await this.keys();
     for (let key in keys) {
       if (key.startsWith(startkey)) {
@@ -45,12 +42,10 @@ export class StorageService {
   }
 
   async clear(): Promise<void> {
-    const { Storage } = Plugins;
     await Storage.clear();
   }
 
   async keys(): Promise<{ keys: string[] }> {
-    const { Storage } = Plugins;
     return await Storage.keys();
   }
 }

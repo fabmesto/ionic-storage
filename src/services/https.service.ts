@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, switchMap, timeout } from 'rxjs/operators';
 import { from, of, throwError } from 'rxjs';
-
-import '@capacitor-community/http';
-import { Plugins } from '@capacitor/core';
+import { Http } from '@capacitor-community/http';
 
 @Injectable({
   providedIn: 'root'
@@ -89,8 +87,6 @@ export class HttpsService {
   }
 
   protected getPlugin(url, headers = {}, params = {}) {
-    const { Http } = Plugins;
-
     const promise = Http.request({
       method: 'GET',
       url,
@@ -154,8 +150,6 @@ export class HttpsService {
   }
 
   protected postPlugin(url, data = {}, headers = {}) {
-    const { Http } = Plugins;
-
     headers['Content-Type'] = 'application/json';
 
     const promise = Http.request({
