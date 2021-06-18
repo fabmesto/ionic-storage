@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { MigrateResult, Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,11 @@ export class StorageService {
 
   constructor(
   ) {
-    Storage.migrate();
+
+  }
+
+  migrate(): Promise<MigrateResult> {
+    return Storage.migrate();
   }
 
   async set(key: string, value: any): Promise<void> {
