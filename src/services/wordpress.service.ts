@@ -18,7 +18,7 @@ export class WordpressService {
       'url to implement'
     );
   }
-  
+
   public saveUserSettings(data: any): Observable<any> {
     return this._authPost(
       'url to implement',
@@ -26,21 +26,21 @@ export class WordpressService {
     );
   }
 
-  public itunesValidatePurchase(product): Observable<any> {
+  public itunesValidatePurchase(product: any): Observable<any> {
     return this._authPost(
       'url to implement',
       product
     );
   }
 
-  public googleValidatePurchase(product): Observable<any> {
+  public googleValidatePurchase(product: any): Observable<any> {
     return this._authPost(
       'url to implement',
       product
     );
   }
 
-  protected _authPost(url, data): Observable<any> {
+  protected _authPost(url: string, data: any): Observable<any> {
     const user = this.authentication.getUser();
     let options: any = {};
     if (user) {
@@ -50,7 +50,7 @@ export class WordpressService {
     return this.https.post(url, data, options);
   }
 
-  protected _authGet(url): Observable<any> {
+  protected _authGet(url: string): Observable<any> {
     const user = this.authentication.getUser();
     let options: any = {};
     if (user) {

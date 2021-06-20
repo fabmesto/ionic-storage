@@ -25,7 +25,7 @@ export class StorageService {
     });
   }
 
-  async get(key: string): Promise<string> {
+  async get(key: string): Promise<string | null> {
     const item = await Storage.get({ key: key });
     return item.value;
   }

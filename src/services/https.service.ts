@@ -74,7 +74,7 @@ export class HttpsService {
     return headers;
   }
 
-  public get(url, headers = {}, params = {}) {
+  public get(url: string, headers = {}, params = {}) {
     if (this.useNoCache) {
       headers = this.getHeadersNoCache(headers);
     }
@@ -86,7 +86,7 @@ export class HttpsService {
     }
   }
 
-  protected getPlugin(url, headers = {}, params = {}) {
+  protected getPlugin(url: string, headers = {}, params = {}) {
     const promise = Http.request({
       method: 'GET',
       url,
@@ -123,7 +123,7 @@ export class HttpsService {
     );
   }
 
-  protected getAngular(url, options = {}) {
+  protected getAngular(url: string, options = {}) {
 
     return this.angularHttp.get(url, options).pipe(
       timeout(this.urltimeout),
@@ -141,7 +141,7 @@ export class HttpsService {
     );
   }
 
-  public post(url, data = {}, headers = {}) {
+  public post(url: string, data = {}, headers = {}) {
     if (this.usePlugin) {
       return this.postPlugin(url, data, headers);
     } else {
@@ -149,7 +149,7 @@ export class HttpsService {
     }
   }
 
-  protected postPlugin(url, data = {}, headers = {}) {
+  protected postPlugin(url: string, data = {}, headers: any = {}) {
     headers['Content-Type'] = 'application/json';
 
     const promise = Http.request({
@@ -188,7 +188,7 @@ export class HttpsService {
     );
   }
 
-  protected postAngular(url, data, options = {}) {
+  protected postAngular(url: string, data: any, options = {}) {
     return this.angularHttp.post(url, data, options).pipe(
       timeout(this.urltimeout),
       catchError(error => {
@@ -205,7 +205,7 @@ export class HttpsService {
     );
   }
 
-  public upload(url: string, data, headers) {
+  public upload(url: string, data: any, headers: any) {
     return this.post(url, data, headers);
   }
 

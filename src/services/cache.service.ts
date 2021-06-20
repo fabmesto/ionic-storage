@@ -22,7 +22,7 @@ export class CacheService {
     return this.storage.set(key, value);
   }
 
-  async getLocal(key: string): Promise<string> {
+  async getLocal(key: string): Promise<string | null> {
     return await this.storage.get(key);
   }
 
@@ -35,7 +35,7 @@ export class CacheService {
     return false;
   }
 
-  isValidTime(timeString, cacheTime?: number): boolean {
+  isValidTime(timeString: string, cacheTime?: number): boolean {
     if (!cacheTime) {
       cacheTime = this.defaulCacheTime;
     }
@@ -65,7 +65,7 @@ export class CacheService {
 
   async getDarkMode(): Promise<boolean> {
     const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const local: string = await this.getLocal('darkMode');
+    const local = await this.getLocal('darkMode');
     if (local) {
       return (local === 'true');
     }
