@@ -22,6 +22,10 @@ export class HttpsService {
 
   errorMsg = '';
 
+  public setUsePlugin(value: boolean) {
+    this.usePlugin = value;
+  }
+
   public getHeadersNoCache(options: any = {}) {
     if (this.usePlugin) {
       return this.getHeadersNoCachePlugin(options);
@@ -206,7 +210,48 @@ export class HttpsService {
   }
 
   public upload(url: string, data: any, headers: any) {
-    return this.post(url, data, headers);
+    if (this.usePlugin) {
+      return this.uploadPlugin(url, data, headers);
+    } else {
+      return this.postAngular(url, data, headers);
+    }
+  }
+
+  uploadPlugin(url: string, data: any, headers: {}) {
+    const promise = Http.request({
+      method: 'POST',
+      url,
+      headers,
+      data
+    });
+
+    const observable = from(promise);
+    return observable.pipe(
+      timeout(this.urltimeout),
+      switchMap((all: any) => {
+        if (all.status === 200) {
+          if (all.data) {
+            return of(all.data);
+          } else {
+            return of(all);
+          }
+        } else {
+          console.log('http post error', all);
+          return throwError({ error: all.data });
+        }
+      }),
+      catchError(error => {
+        if (error.error instanceof ErrorEvent) {
+          this.errorMsg = `Error: ${error.error.message}`;
+        } else {
+          this.errorMsg = this.getServerErrorMessage(error);
+        }
+        console.log(this.errorMsg);
+        // this.toast.show(this.errorMsg);
+        return throwError(error);
+        // return of([]);
+      })
+    );
   }
 
   protected getServerErrorMessage(error: HttpErrorResponse): string {
