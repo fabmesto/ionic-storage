@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "es2017",
     "moduleResolution": "node",
     "sourceMap": true,
     "inlineSources": true,
     "declaration": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2017"],
+    "target": "es2015",
+    "module": "es2020",
+    "lib": ["es2018", "dom"],
     "outDir": "dist"
   },
   "exclude": [
@@ -17,6 +17,7 @@
     "scripts"
   ],
   "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
     "skipTemplateCodegen": true
   }
 }
