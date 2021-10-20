@@ -2,7 +2,7 @@ import { Platform } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, switchMap, timeout } from 'rxjs/operators';
-import { from, of, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { Http } from '@capacitor-community/http';
 
 @Injectable({
@@ -78,7 +78,7 @@ export class HttpsService {
     return headers;
   }
 
-  public get(url: string, headers = {}, params = {}) {
+  public get(url: string, headers = {}, params = {}): Observable<any> {
     if (this.useNoCache) {
       headers = this.getHeadersNoCache(headers);
     }
@@ -90,7 +90,7 @@ export class HttpsService {
     }
   }
 
-  protected getPlugin(url: string, headers = {}, params = {}) {
+  protected getPlugin(url: string, headers = {}, params = {}): Observable<any> {
     const promise = Http.request({
       method: 'GET',
       url,
@@ -127,7 +127,7 @@ export class HttpsService {
     );
   }
 
-  protected getAngular(url: string, options = {}) {
+  protected getAngular(url: string, options = {}): Observable<any> {
 
     return this.angularHttp.get(url, options).pipe(
       timeout(this.urltimeout),
@@ -145,7 +145,7 @@ export class HttpsService {
     );
   }
 
-  public post(url: string, data = {}, headers = {}) {
+  public post(url: string, data = {}, headers = {}): Observable<any> {
     if (this.usePlugin) {
       return this.postPlugin(url, data, headers);
     } else {
@@ -153,7 +153,7 @@ export class HttpsService {
     }
   }
 
-  protected postPlugin(url: string, data = {}, headers: any = {}) {
+  protected postPlugin(url: string, data = {}, headers: any = {}): Observable<any> {
     headers['Content-Type'] = 'application/json';
 
     const promise = Http.request({
@@ -192,7 +192,7 @@ export class HttpsService {
     );
   }
 
-  protected postAngular(url: string, data: any, options = {}) {
+  protected postAngular(url: string, data: any, options = {}): Observable<any> {
     return this.angularHttp.post(url, data, options).pipe(
       timeout(this.urltimeout),
       catchError(error => {
@@ -209,7 +209,7 @@ export class HttpsService {
     );
   }
 
-  public upload(url: string, data: any, headers: any) {
+  public upload(url: string, data: any, headers: any): Observable<any> {
     if (this.usePlugin) {
       return this.uploadPlugin(url, data, headers);
     } else {
@@ -217,7 +217,7 @@ export class HttpsService {
     }
   }
 
-  uploadPlugin(url: string, data: any, headers: {}) {
+  uploadPlugin(url: string, data: any, headers: {}): Observable<any> {
     const promise = Http.request({
       method: 'POST',
       url,
