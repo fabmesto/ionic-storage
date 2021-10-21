@@ -38,9 +38,12 @@ export class StorageService {
 
   async removes(startkey: string): Promise<void> {
     let keys = await this.keys();
-    for (let key in keys) {
-      if (key.startsWith(startkey)) {
-        this.remove(key);
+    if (keys['keys']) {
+      for (let index in keys['keys']) {
+        let key = keys['keys'][index];
+        if (key.startsWith(startkey)) {
+          this.remove(key);
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { map, switchMap, delay, tap } from 'rxjs/operators';
+import { map, delay, switchMap, tap } from 'rxjs/operators';
 import { CachingService } from './caching.service';
 import { ToastController } from '@ionic/angular';
 import { Network } from '@capacitor/network';
@@ -14,7 +14,7 @@ export class ApiService {
 
     constructor(
         public https: HttpsService,
-        private cachingService: CachingService,
+        public cachingService: CachingService,
         private toastController: ToastController
     ) {
         Network.addListener('networkStatusChange', async status => {
@@ -41,13 +41,12 @@ export class ApiService {
     */
 
     // Caching Functions
-
     public getData(url, forceRefresh = false, headers = {}, params = {}, cacheTime?: number): Observable<any> {
 
         // Handle offline case
         if (!this.connected) {
             this.toastController.create({
-                message: 'You are viewing offline data.',
+                message: 'Stai visualizzando i dati offline.',
                 duration: 2000
             }).then(toast => {
                 toast.present();
@@ -78,7 +77,7 @@ export class ApiService {
 
     private callAndCache(url, headers = {}, params = {}, cacheTime?: number): Observable<any> {
         return this.https.get(url, headers, params).pipe(
-            //delay(2000), // Only for testing!
+            //delay(2000), // solo per testing!
             tap(res => {
                 // Store our new data
                 this.cachingService.cacheRequest(url, res, cacheTime);

@@ -63,4 +63,9 @@ export class CachingService {
         url = `${this.CACHE_KEY}${url}`;
         await this.storage.remove(url);
     }
+
+    async invalidateCacheForAllUrlStartsWith(url) {
+        url = `${this.CACHE_KEY}${url}`;
+        await this.storage.removes(url);
+    }
 }
