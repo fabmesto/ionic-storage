@@ -5,7 +5,6 @@ import { CachingService } from './caching.service';
 import { ToastController } from '@ionic/angular';
 import { Network } from '@capacitor/network';
 import { HttpsService } from './https.service';
-import { AuthenticationService } from './authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +14,6 @@ export class ApiService {
 
     constructor(
         public https: HttpsService,
-        public authentication: AuthenticationService,
         private cachingService: CachingService,
         private toastController: ToastController
     ) {
@@ -42,19 +40,9 @@ export class ApiService {
     }
     */
 
-    protected _authGetData(url: string, forceRefresh = false): Observable<any> {
-        const user = this.authentication.getUser();
-        let options: any = {};
-        if (user) {
-            const token = user.token;
-            options = this.https.getHeadersToken(token);
-        }
-        return this._getData(url, forceRefresh, options);
-    }
-
     // Caching Functions
 
-    protected _getData(url, forceRefresh = false, headers = {}, params = {}, cacheTime?: number): Observable<any> {
+    public getData(url, forceRefresh = false, headers = {}, params = {}, cacheTime?: number): Observable<any> {
 
         // Handle offline case
         if (!this.connected) {

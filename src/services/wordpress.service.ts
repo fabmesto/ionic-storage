@@ -1,3 +1,4 @@
+import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
@@ -11,6 +12,7 @@ export class WordpressService {
   constructor(
     public https: HttpsService,
     public authentication: AuthenticationService,
+    public api: ApiService,
   ) { }
 
   public getUserSettings(): Observable<any> {
@@ -41,23 +43,23 @@ export class WordpressService {
   }
 
   protected _authPost(url: string, data: any): Observable<any> {
-    const user = this.authentication.getUser();
-    let options: any = {};
-    if (user) {
-      const token = user.token;
-      options = this.https.getHeadersToken(token);
-    }
+    const options = this._getUserHeaders();
     return this.https.post(url, data, options);
   }
 
-  protected _authGet(url: string): Observable<any> {
+  protected _authGet(url: string, forceRefresh = false, cacheTime?: number): Observable<any> {
+    const options = this._getUserHeaders();
+    return this.api.getData(url, forceRefresh, options, {}, cacheTime);
+  }
+
+  protected _getUserHeaders() {
     const user = this.authentication.getUser();
-    let options: any = {};
+    let options = {};
     if (user) {
       const token = user.token;
       options = this.https.getHeadersToken(token);
     }
-    return this.https.get(url, options);
+    return options;
   }
 
 }
