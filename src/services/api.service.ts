@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { map, delay, switchMap, tap } from 'rxjs/operators';
-import { CachingService } from './caching.service';
+import { IonicCachingService } from './ionic_caching.service';
 import { ToastController } from '@ionic/angular';
 import { Network } from '@capacitor/network';
 import { HttpsService } from './https.service';
@@ -14,7 +14,7 @@ export class ApiService {
 
     constructor(
         public https: HttpsService,
-        public cachingService: CachingService,
+        public cachingService: IonicCachingService,
         private toastController: ToastController
     ) {
         Network.addListener('networkStatusChange', async status => {

@@ -4,7 +4,7 @@ import { MigrateResult, Storage } from '@capacitor/storage';
 @Injectable({
   providedIn: 'root'
 })
-export class StorageService {
+export class CapacitorStorageService {
 
   constructor(
   ) {

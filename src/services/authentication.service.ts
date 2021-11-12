@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpsService } from './https.service';
-import { StorageService } from './storage.service';
+import { CapacitorStorageService } from './capacitor_storage.service';
 
 
 @Injectable({
@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   constructor(
     protected https: HttpsService,
-    protected storage: StorageService,
+    protected storage: CapacitorStorageService,
   ) {
   }
 

@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
-
-
+import { Storage } from '@ionic/storage';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver'
 
 @Injectable({
     providedIn: 'root'
 })
-export class CachingService {
+export class IonicCachingService {
     // Expire time in seconds
     public defaulCacheTime = 60 * 60;
     public CACHE_KEY = '_cached_';
 
     constructor(
-        private storage: StorageService
+        private storage: Storage
     ) { }
 
     // Setup Ionic Storage
     async initStorage() {
-        await this.storage.migrate();
+        await this.storage.defineDriver(CordovaSQLiteDriver);
+        await this.storage.create();
     }
 
     // Store request data
@@ -35,27 +35,27 @@ export class CachingService {
         const currentTime = new Date().getTime();
         url = `${this.CACHE_KEY}${url}`;
 
-        const storedString = await this.storage.get(url);
-        if (storedString) {
+        const storedValue = await this.storage.get(url);
 
-            const storedValue = JSON.parse(storedString);
-
-            if (!storedValue) {
-                return null;
-            } else if (storedValue.validUntil < currentTime) {
-                await this.storage.remove(url);
-                return null;
-            } else {
-                return storedValue.data;
-            }
-        } else {
+        if (!storedValue) {
             return null;
+        } else if (storedValue.validUntil < currentTime) {
+            await this.storage.remove(url);
+            return null;
+        } else {
+            return storedValue.data;
         }
     }
 
     // Remove all cached data & files
     async clearCachedData() {
-        this.storage.removes(this.CACHE_KEY);
+        const keys = await this.storage.keys();
+
+        keys.map(async key => {
+            if (key.startsWith(this.CACHE_KEY)) {
+                await this.storage.remove(key);
+            }
+        });
     }
 
     // Example to remove one cached URL
@@ -66,6 +66,12 @@ export class CachingService {
 
     async invalidateCacheForAllUrlStartsWith(url) {
         url = `${this.CACHE_KEY}${url}`;
-        await this.storage.removes(url);
+        let keys = await this.storage.keys();
+
+        keys.map(async key => {
+            if (key.startsWith(url)) {
+                await this.storage.remove(key);
+            }
+        });
     }
 }

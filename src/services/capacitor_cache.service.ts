@@ -1,16 +1,16 @@
 import { WordpressService } from './wordpress.service';
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
+import { CapacitorStorageService } from './capacitor_storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CacheService {
+export class CapacitorCacheService {
   keyTime = '_t';
   defaulCacheTime = 60 * 5;
 
   constructor(
-    public storage: StorageService,
+    public storage: CapacitorStorageService,
     public wordpress: WordpressService,
   ) {
   }
