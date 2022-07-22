@@ -1,6 +1,6 @@
 {
   "name": "ionic-wp",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Ionic WordPress Services",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -21,23 +21,23 @@
   "license": "MIT",
   "homepage": "https://netedit.it",
   "devDependencies": {
-    "@angular/compiler": "^14.0.6",
-    "@angular/compiler-cli": "^14.0.6",
-    "@angular/core": "^14.0.6",
-    "@angular/forms": "^14.0.6",
-    "@angular/platform-browser": "^14.0.6",
-    "@angular/router": "^14.0.6",
+    "@angular/compiler": "^14.1.0",
+    "@angular/compiler-cli": "^14.1.0",
+    "@angular/core": "^14.1.0",
+    "@angular/forms": "^14.1.0",
+    "@angular/platform-browser": "^14.1.0",
+    "@angular/router": "^14.1.0",
     "@capacitor/core": "^3.6.0",
     "typescript": "^4.7.4",
-    "zone.js": "~0.11.4"
+    "zone.js": "^0.11.7"
   },
   "dependencies": {
-    "@angular/common": "^14.0.6",
+    "@angular/common": "^14.1.0",
     "@auth0/angular-jwt": "^5.0.2",
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/network": "^1.0.7",
     "@capacitor/storage": "^1.2.5",
-    "@ionic/angular": "^6.1.14",
+    "@ionic/angular": "^6.1.15",
     "@ionic/storage": "^3.0.6",
     "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "^7.5.6"
