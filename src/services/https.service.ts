@@ -102,7 +102,7 @@ export class HttpsService {
     return observable.pipe(
       timeout(this.urltimeout),
       switchMap((all: any) => {
-        if (all.status === 200) {
+        if (all.status >= 200 && all.status < 300) {
           if (all.data) {
             return of(all.data);
           } else {
@@ -167,7 +167,7 @@ export class HttpsService {
     return observable.pipe(
       timeout(this.urltimeout),
       switchMap((all: any) => {
-        if (all.status === 200) {
+        if (all.status >= 200 && all.status < 300) {
           if (all.data) {
             return of(all.data);
           } else {
@@ -229,7 +229,7 @@ export class HttpsService {
     return observable.pipe(
       timeout(this.urltimeout),
       switchMap((all: any) => {
-        if (all.status === 200) {
+        if (all.status >= 200 && all.status < 300) {
           if (all.data) {
             return of(all.data);
           } else {

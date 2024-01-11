@@ -1,6 +1,6 @@
 {
   "name": "ionic-wp",
-  "version": "5.0.0",
+  "version": "5.0.2",
   "description": "Ionic WordPress Services",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -38,7 +38,7 @@
     "@capacitor-community/http": "^1.4.1",
     "@capacitor/network": "^5.0.6",
     "@capacitor/preferences": "^5.0.6",
-    "@ionic/angular": "^7.6.1",
+    "@ionic/angular": "^6.1.15",
     "@ionic/storage": "^4.0.0",
     "localforage-cordovasqlitedriver": "^1.8.0",
     "rxjs": "^7.8.1"
